@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="codeva-eDCqhDkiN7">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS 贝塞尔曲线">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="贝塞尔曲线不仅CSS中用到了，在JS中也同样可以用到">
+<meta name="keywords" content="CSS 贝塞尔曲线">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝塞尔曲线及其应用">
+<meta property="og:url" content="https://zhuchuanlei.github.io/bezier/index.html">
+<meta property="og:site_name" content="祝传磊的博客">
+<meta property="og:description" content="贝塞尔曲线不仅CSS中用到了，在JS中也同样可以用到">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/bezier/normal.svg">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/bezier/bezier1.svg">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/bezier/bezier2.svg">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/bezier/bezier3.svg">
+<meta property="og:updated_time" content="2023-02-09T10:19:00.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贝塞尔曲线及其应用">
+<meta name="twitter:description" content="贝塞尔曲线不仅CSS中用到了，在JS中也同样可以用到">
+<meta name="twitter:image" content="https://zhuchuanlei.github.io/image/bezier/normal.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhuchuanlei.github.io/bezier/">
+
+
+
+
+
+  <title>贝塞尔曲线及其应用 | 祝传磊的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">祝传磊的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhuchuanlei.github.io/bezier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="祝传磊">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="祝传磊的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">贝塞尔曲线及其应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-30T00:00:00+08:00">
+                2021-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  贝塞尔曲线不仅CSS中用到了，在JS中也同样可以用到
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在前端工作中，<code>贝塞尔曲线</code>被多个地方应用。就如最近年会抽奖中，开始滚动的加速度和结束滚动时如何缓慢停止在中奖号码的位置，就用到了<code>贝塞尔曲线</code>。所以顺势就介绍一下<code>贝塞尔曲线</code>和简单应用。<br>其一般参数公式：   </p>
+<p><img src="../image/bezier/normal.svg" alt></p>
+<p>该曲线是由<code>P0</code>开始，止于<code>Pn</code>，中间有<code>n-2</code>个点控制曲线的走势。根据控制点个数不同，得到不同的特殊曲线公式。</p>
+<!-- 下面是3个常见的曲线公式 -->
+
+<!--  -->
+<p>在实际工作中，常用的是<code>二次贝塞尔曲线</code>和<code>三次贝塞尔曲线</code>。一次贝塞尔曲线，呈现出来的是一条直线。下面是几种常见的贝塞尔曲线的介绍和应用。</p>
+<h3 id="常见的曲线"><a href="#常见的曲线" class="headerlink" title="常见的曲线"></a>常见的曲线</h3><h4 id="线性公式"><a href="#线性公式" class="headerlink" title="线性公式"></a>线性公式</h4><p><code>n=1</code>时，控制点个数: <code>0</code>，仅有开始和结束两个点，得到的是一条直线。<br><img src="../image/bezier/bezier1.svg" alt>  </p>
+<h4 id="二次方公式"><a href="#二次方公式" class="headerlink" title="二次方公式"></a>二次方公式</h4><p><code>n=2</code>时，控制点个数: <code>1</code><br><img src="../image/bezier/bezier2.svg" alt>  </p>
+<h4 id="三次方公式"><a href="#三次方公式" class="headerlink" title="三次方公式"></a>三次方公式</h4><p><code>n=3</code>时，控制点个数: <code>2</code><br><img src="../image/bezier/bezier3.svg" alt>   </p>
+<h4 id="公式说明"><a href="#公式说明" class="headerlink" title="公式说明"></a>公式说明</h4><p>以<code>二次方公式</code>为例，转换为函数如下，其中P0为起点，P2为终点，P1为控制点。得到的是从P0到P2的<code>点</code>关于<code>t</code>的二次函数，t的范围[0, 1]。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">QuadraticBezier</span>(<span class="params">P0, P1, P2</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">t</span>) =&gt;</span> (<span class="number">1</span> - t) * (<span class="number">1</span> - t) * P0 + <span class="number">2</span> * t * (<span class="number">1</span> - t) * P1 + t * t * P2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><h4 id="SVG的应用"><a href="#SVG的应用" class="headerlink" title="SVG的应用"></a>SVG的应用</h4><p>在<code>SVG</code>中，用<code>q</code>或者<code>Q</code>可以绘制<code>二次方贝塞尔曲线</code>(q指相对位置，Q指绝对位置)。以<a href="https://www.runoob.com/try/try.php?filename=trysvg_path2" target="_blank" rel="noopener">svg</a>为例，<br>关键代码<code>&lt;path d=&quot;M 100 350 Q 250 50 400 350&quot;/&gt;</code>，起点P0<code>(100 350)</code>, 终点P2<code>(400 350)</code>, 控制点P1<code>(250 50)</code>。将X坐标和Y坐标分别带入函数<code>QuadraticBezier</code>中，可以获得某个时刻的具体坐标。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分别计算X、Y</span></span><br><span class="line"><span class="keyword">const</span> getX = <span class="keyword">new</span> QuadraticBezier(<span class="number">100</span>, <span class="number">250</span>, <span class="number">400</span>);</span><br><span class="line"><span class="keyword">const</span> getY = <span class="keyword">new</span> QuadraticBezier(<span class="number">350</span>, <span class="number">50</span>, <span class="number">350</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> point = <span class="built_in">document</span>.getElementById(<span class="string">"point"</span>);  <span class="comment">// 随着t动态移动的点</span></span><br><span class="line"><span class="keyword">let</span> t = <span class="number">0</span>;  <span class="comment">// 初始值为0，逐步增加到1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setXY</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  point.style.top = getY(t) + <span class="string">"px"</span>;</span><br><span class="line">  point.style.left = getX(t) + <span class="string">"px"</span>;</span><br><span class="line">  <span class="keyword">if</span> (t &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">    cancelAnimationFrame(frame);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    t = t + <span class="number">0.005</span>;</span><br><span class="line">    frame = requestAnimationFrame(setXY);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> frame = requestAnimationFrame(setXY);</span><br></pre></td></tr></table></figure>
+
+<p>随着<code>t</code>的增加，分别计算出<code>point</code>的top和left，可以得到如下动画：</p>
+<iframe src="../image/bezier/svg.mp4" width="300" height="300"></iframe>  
+
+<p><code>canvas</code>中的api<code>quadraticCurveTo</code>、<code>bezierCurveTo</code>与绘制<code>SVG</code>类似。</p>
+<h4 id="CSS-animation-timing-function"><a href="#CSS-animation-timing-function" class="headerlink" title="CSS animation-timing-function"></a>CSS animation-timing-function</h4><p>在<code>CSS</code>动画中由<code>animation-timing-function</code>规定动画的速度曲线，已经预设了几个值：<br><code>linear</code>、<code>ease</code>、<code>ease-in</code>、<code>ease-out</code>、<code>ease-in-out</code>，自定义速度时使用<code>cubic-bezier()</code>灵活控制。<br>可以修改<a href="https://www.runoob.com/try/try.php?filename=trycss3_animation-timing-function3" target="_blank" rel="noopener">例子</a>中数字看看效果。</p>
+<h4 id="JS中应用"><a href="#JS中应用" class="headerlink" title="JS中应用"></a>JS中应用</h4><p>CSS属性<code>animation-timing-function</code>的值<code>cubic-bezier</code>接收的值正常范围是[0, 1]的，即在<code>三次贝塞尔曲线</code>中，默认起始点<code>P0(0, 0)</code>，终点<code>P3(1, 1)</code>，可以推导出公式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CubicBezier = P0 * (<span class="number">1</span>-t)^<span class="number">3</span> + <span class="number">3</span> * P1 * t * (<span class="number">1</span>-t)^<span class="number">2</span> + <span class="number">3</span> * P2 * t^<span class="number">2</span> * (<span class="number">1</span>-t) + P3 * t^<span class="number">3</span></span><br><span class="line"><span class="comment">// 令 P0(0, 0), P3(1, 1), P1(x1, y1), P2(x2, y2)，代入</span></span><br><span class="line">x = <span class="number">3</span> * x1 * t * (<span class="number">1</span>-t)^<span class="number">2</span> + <span class="number">3</span> * x2 * t^<span class="number">2</span> * (<span class="number">1</span>-t) + t^<span class="number">3</span>;</span><br><span class="line">  = (<span class="number">3</span> * x1 - <span class="number">3</span> * x2 + <span class="number">1</span>) * t^<span class="number">3</span> + (<span class="number">3</span> * x2 - <span class="number">6</span> * x1) * t^<span class="number">2</span> + <span class="number">3</span> * x1 * t;</span><br><span class="line">y = (<span class="number">3</span> * y1 - <span class="number">3</span> * y2 + <span class="number">1</span>) * t^<span class="number">3</span> + (<span class="number">3</span> * y2 - <span class="number">6</span> * x1) * t^<span class="number">2</span> + <span class="number">3</span> * y1 * t;</span><br><span class="line"></span><br><span class="line">即</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CubicBezier</span>(<span class="params">x1, y1, x2, y2</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x1 = x1;</span><br><span class="line">  <span class="keyword">this</span>.y1 = y1;</span><br><span class="line">  <span class="keyword">this</span>.x2 = x2;</span><br><span class="line">  <span class="keyword">this</span>.y2 = y2;</span><br><span class="line">&#125;</span><br><span class="line">CubicBezier.prototype.sampleCurveX = <span class="function"><span class="keyword">function</span>(<span class="params">t</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> x1 = <span class="keyword">this</span>.x1, x2 = <span class="keyword">this</span>.x2;</span><br><span class="line">  <span class="keyword">return</span> (<span class="number">3</span> * x1 - <span class="number">3</span> * x2 + <span class="number">1</span>) * t^<span class="number">3</span> + (<span class="number">3</span> * x2 - <span class="number">6</span> * x1) * t^<span class="number">2</span> + <span class="number">3</span> * x1 * t;</span><br><span class="line">&#125;</span><br><span class="line">CubicBezier.prototype.sampleCurveY = <span class="function"><span class="keyword">function</span>(<span class="params">t</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> y1 = <span class="keyword">this</span>.y1, y2 = <span class="keyword">this</span>.y2;</span><br><span class="line">  <span class="keyword">return</span> (<span class="number">3</span> * y1 - <span class="number">3</span> * y2 + <span class="number">1</span>) * t^<span class="number">3</span> + (<span class="number">3</span> * y2 - <span class="number">6</span> * x1) * t^<span class="number">2</span> + <span class="number">3</span> * y1 * t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将<code>X</code>和<code>Y</code>的函数结合起来，即可计算t时刻的值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CubicBezier.prototype.solve = <span class="function"><span class="keyword">function</span>(<span class="params">t</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.sampleCurveY(<span class="keyword">this</span>.sampleCurveX(t))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时简单结合起来，误差较大。因为根据绘制SVG例子中可以看出，函数<code>sampleCurveX</code>和<code>sampleCurveY</code>计算的是<code>t</code>时刻的坐标<code>x</code>和<code>y</code>，能画出该<code>三次贝塞尔曲线</code>。但是应用到属性值的变化上时，曲线上<code>t</code>时刻的<code>切线</code>代表<code>t</code>时刻属性值变化的<code>速度</code>，与<code>t</code>时刻的坐标<code>x</code>和<code>y</code>不是直接关系。所以需要在对函数进行再加工。牛顿迭代法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">CubicBezier.prototype.solve = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (x === <span class="number">0</span> || x === <span class="number">1</span>) &#123;             <span class="comment">// 对 0 和 1 两个特殊 t 不做计算</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sampleCurveY(x);</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">let</span> t = x</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) &#123;         <span class="comment">// 进行 8 次迭代</span></span><br><span class="line">    <span class="keyword">const</span> g = <span class="keyword">this</span>.sampleCurveX(t) - x</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(g) &lt; <span class="keyword">this</span>.epsilon) &#123;   <span class="comment">// 检测误差到可以接受的范围, 如：this.epsilon = 1e-7;</span></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.sampleCurveY(t)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> d = <span class="number">3</span> * (<span class="number">3</span> * x1 - <span class="number">3</span> * x2 + <span class="number">1</span>) * t^<span class="number">2</span> + <span class="number">2</span> * (<span class="number">3</span> * x2 - <span class="number">6</span> * x1) * t + <span class="number">3</span> * x1;  <span class="comment">// 对 x 求导</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(d) &lt; <span class="number">1e-6</span>) &#123;           <span class="comment">// 如果梯度过低，说明牛顿迭代法无法达到更高精度</span></span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">    t = t - g / d;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.sampleCurveY(t)                   <span class="comment">// 对得到的近似 t 求 y</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">在误差可接受的范围内，迭代后的效果与CSS动画还是有微微的差距的。测试效果如下:</span></span><br><span class="line"><span class="string">&lt;iframe src="image/bezier/iteration.mp4" width="100" height="300"&gt;&lt;/iframe&gt;  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#### 老虎机中的应用</span></span><br><span class="line"><span class="string">在年会抽奖页面中，也用到了`</span>三次贝塞尔曲线<span class="string">`，如：开始滚动时，滚动速度要从0加速到指定速度`</span>maxSpeed<span class="string">`，需要传入：初始速度0，最大速度maxSpeed，当前时间，加速到maxSpeed所需时间以及控制点。可得如下函数：</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initCubicBezier</span>(<span class="params">startTime, totalTime, startValue, targetValue, controlArr</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> cubic = <span class="keyword">new</span> CubicBezier(...controlArr);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getValue</span>(<span class="params">time</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> progress = (time - startTime) / totalTime;</span><br><span class="line">    <span class="keyword">if</span> (progress &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">      progress = <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> value = cubic.solve(progress);</span><br><span class="line">    <span class="keyword">return</span> value * (targetValue - startValue) + startValue;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> getValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>开始滚动</p>
+<ol>
+<li>创建获取当前时间对应速度的函数<code>getSpeed</code></li>
+<li>根据<code>top</code>值使图片偏移，达到移动效果</li>
+<li><code>top = top + speed</code>, 修改<code>speed</code>的值使增量变化，达到加速效果</li>
+<li>速度未达到最大速度时，<code>getSpeed</code>获取新的速度</li>
+<li>重复2-4，主要代码如下</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> top = <span class="number">0</span>; <span class="comment">// 当前图片移动的位置</span></span><br><span class="line">  <span class="keyword">let</span> speed = <span class="number">0</span>;  <span class="comment">// 初始速度</span></span><br><span class="line">  <span class="keyword">const</span> targetSpeed = <span class="number">100</span>;  <span class="comment">// 最大速度</span></span><br><span class="line">  <span class="keyword">const</span> totalTime = <span class="number">3000</span>;   <span class="comment">// 3000毫秒加速到最大速度</span></span><br><span class="line">  <span class="keyword">const</span> getSpeed = initCubicBezier(date.now(), totalTime, speed, targetSpeed, [<span class="number">.5</span>,<span class="number">.5</span>,<span class="number">.5</span>,<span class="number">.5</span>]);</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">run</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (speed &lt; targetSpeed) &#123;</span><br><span class="line">      speed = getSpeed(<span class="built_in">Date</span>.now());</span><br><span class="line">    &#125;</span><br><span class="line">    top = top + speed;</span><br><span class="line">    drawImage(top);  <span class="comment">// 重新绘制图片</span></span><br><span class="line">    requestAnimationFrame(run);</span><br><span class="line">  &#125;</span><br><span class="line">  requestAnimationFrame(run); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>结束滚动</p>
+<ol>
+<li>需要结束时根据<code>top</code>计算当前显示的数字<code>showNum</code></li>
+<li>根据中奖数字<code>targetNum</code>和<code>showNum</code>计算出，停止滚动时的值<code>targetTop</code></li>
+<li>创建获取某时刻的top函数<code>getTop</code></li>
+<li>计算此刻图片的偏移量<code>top</code></li>
+<li>判断<code>top &lt; targetTop</code>时，说明还未滚动中奖号码，继续滚动</li>
+<li>判断<code>top &gt;= targetTop</code>时，停止滚动。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">end</span>(<span class="params">targetNum</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> targetTop = getTargetTop(top, targetNum);  <span class="comment">// 根据当先位置，和中奖数字，获取停留的位置</span></span><br><span class="line">  <span class="keyword">const</span> getTop = initCubicBezier(date.now(), <span class="number">3000</span>, top, targetTop, [<span class="number">.39</span>,<span class="number">.61</span>,<span class="number">.74</span>,<span class="number">.99</span>]);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">run</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (top &gt;= targetTop) &#123;</span><br><span class="line">      cancelAnimationFrame(frame);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      top = getTop(<span class="built_in">Date</span>.now());</span><br><span class="line">      drawImage(top);  <span class="comment">// 绘制新图片</span></span><br><span class="line">      frame = requestAnimationFrame(run);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> frame = requestAnimationFrame(run);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终效果如下:</p>
+<iframe src="../image/bezier/number.mp4" width="200" height="200"></iframe>  
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js-整理/" rel="tag"># js 整理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/HTTP-cache/" rel="next" title="HTTP缓存">
+                <i class="fa fa-chevron-left"></i> HTTP缓存
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/css/layer/" rel="prev" title="CSS 新规则 layer 级联层">
+                CSS 新规则 layer 级联层 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">祝传磊</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的曲线"><span class="nav-number">2.</span> <span class="nav-text">常见的曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线性公式"><span class="nav-number">2.1.</span> <span class="nav-text">线性公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二次方公式"><span class="nav-number">2.2.</span> <span class="nav-text">二次方公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三次方公式"><span class="nav-number">2.3.</span> <span class="nav-text">三次方公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公式说明"><span class="nav-number">2.4.</span> <span class="nav-text">公式说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">3.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SVG的应用"><span class="nav-number">3.1.</span> <span class="nav-text">SVG的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS-animation-timing-function"><span class="nav-number">3.2.</span> <span class="nav-text">CSS animation-timing-function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JS中应用"><span class="nav-number">3.3.</span> <span class="nav-text">JS中应用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">祝传磊</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+</body>
+</html>

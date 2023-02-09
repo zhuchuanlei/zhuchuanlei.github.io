@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="codeva-eDCqhDkiN7">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS layer 级联层">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="经常需要修改框架的样式，而增加了许多类？样式覆盖看看这篇文章">
+<meta name="keywords" content="CSS layer 级联层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS 新规则 layer 级联层">
+<meta property="og:url" content="https://zhuchuanlei.github.io/css/layer/index.html">
+<meta property="og:site_name" content="祝传磊的博客">
+<meta property="og:description" content="经常需要修改框架的样式，而增加了许多类？样式覆盖看看这篇文章">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/layer/blue.png">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/layer/red.png">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/layer/blue.png">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/layer/gray.png">
+<meta property="og:image" content="https://zhuchuanlei.github.io/image/layer/caniuse.png">
+<meta property="og:updated_time" content="2023-02-09T10:19:00.420Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS 新规则 layer 级联层">
+<meta name="twitter:description" content="经常需要修改框架的样式，而增加了许多类？样式覆盖看看这篇文章">
+<meta name="twitter:image" content="https://zhuchuanlei.github.io/image/layer/blue.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhuchuanlei.github.io/css/layer/">
+
+
+
+
+
+  <title>CSS 新规则 layer 级联层 | 祝传磊的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">祝传磊的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhuchuanlei.github.io/css/layer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="祝传磊">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="祝传磊的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSS 新规则 layer 级联层</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-15T00:00:00+08:00">
+                2022-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  经常需要修改框架的样式，而增加了许多类？样式覆盖看看这篇文章
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-写在前面"><a href="#1-写在前面" class="headerlink" title="1. 写在前面"></a>1. 写在前面</h2><p>你是不是有时候会被样式覆盖问题所困绕？写了样式但是不生效，检查一下发现被一个权重更高的覆盖了。</p>
+<p>所以开始加权重，增加类，甚至经常用<code>!important</code>。</p>
+<p>项目代码越来越多时，<code>!important</code>也跟着多了起来，后面又该怎么整理呢？</p>
+<h2 id="2-级联层"><a href="#2-级联层" class="headerlink" title="2. 级联层"></a>2. 级联层</h2><p><code>CSS</code>出现一个新规则：<code>@layer</code>。它声明了一个 <em>级联层</em>,  同一层内的规则将级联在一起， 这给予了开发者对层叠机制的更多控制。</p>
+<p>⚠️ 不同级联层内的属性，无权重之分</p>
+<blockquote>
+<p>举个例子</p>
+</blockquote>
+<p>看这个例子，如果同时为同一个<code>div</code>设置<code>background-color</code>属性，肯定是展示下面的颜色，因为<em>相同层级，后面的生效</em>，背景色是红色。</p>
+<p>通过用<code>@layer</code>声明了层级后，最终样式可以被控制的。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* html </span></span><br><span class="line"><span class="comment">  &lt;div id='test' class='test'&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* css */</span></span><br><span class="line"><span class="keyword">@layer</span> R, B;</span><br><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> R &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="../../image/layer/blue.png" alt="1"></p>
+<h2 id="3-语法"><a href="#3-语法" class="headerlink" title="3. 语法"></a>3. 语法</h2><blockquote>
+<p>两种声明方式</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. <span class="keyword">@layer</span> Name &#123; <span class="selector-tag">css</span> &#125;;</span><br><span class="line">2. <span class="keyword">@import</span>(utilities.css) layer(utilities);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-案例解释"><a href="#3-1-案例解释" class="headerlink" title="3.1 案例解释"></a>3.1 案例解释</h3><h4 id="3-1-1-声明后即给出代码块"><a href="#3-1-1-声明后即给出代码块" class="headerlink" title="3.1.1 声明后即给出代码块"></a>3.1.1 声明后即给出代码块</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> R &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果</p>
+<p><img src="../../image/layer/red.png" alt></p>
+<p>这是最基础的用法，最终效果是红色，也是因为<em>相同层级，后面的生效</em>，层级<code>R</code>在层级<code>B</code>后面，就把<code>B</code>内的属性覆盖了。这样其实<code>layer</code>作用并不明显。如果想以<code>B</code>内的属性优先，看下面的例子。</p>
+<h4 id="3-1-2-多个层级块同时被声明"><a href="#3-1-2-多个层级块同时被声明" class="headerlink" title="3.1.2 多个层级块同时被声明"></a>3.1.2 多个层级块同时被声明</h4><p>先声明多个层级，再在下面写对应的层级块，类似于<code>var</code>和<code>let</code>先声明后赋值。</p>
+<p><strong>⚠️这种写法比较方便，优先级：<em>写在后面 &gt; 写在前面</em>，现在下面例子的背景色是蓝色，如果改成<code>@layer B, R;</code>，则展示红色</strong> </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@layer</span> R, B; <span class="comment">/* 先声明两个层级B和R */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> R &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="../../image/layer/blue.png" alt></p>
+<h4 id="3-1-3-外联样式也可以被声明"><a href="#3-1-3-外联样式也可以被声明" class="headerlink" title="3.1.3 外联样式也可以被声明"></a>3.1.3 外联样式也可以被声明</h4><p>下例，引入外部样式，声明层级G，其效果与上例类似，最终是以<code>@layer B, R, G;</code>的顺序展示。</p>
+<p>同样遵循<em>写在后面 &gt; 写在前面</em>的优先级。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* index.css */</span></span><br><span class="line"><span class="keyword">@layer</span> B, R, G;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@import</span> url(style.css) layer(G); <span class="comment">/* 引入外部样式，并赋予层级G */</span></span><br><span class="line"><span class="comment">/* B, R样式与上例一样，故省略 */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* style.css */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: gray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="../../image/layer/gray.png" alt></p>
+<h3 id="3-2-其他情况"><a href="#3-2-其他情况" class="headerlink" title="3.2 其他情况"></a>3.2 其他情况</h3><ol>
+<li>非级联层权重比级联层权重高；</li>
+<li>级联层内的权重。级联层内无id，类等权重之分；</li>
+<li>层级嵌套时，二级层级外的属性属于一级内的非级联层，权重高于二级层级；</li>
+<li>匿名级联层，创建时被声明，权重看顺序(效果与3.1.1案例一致)；</li>
+<li>级联层内的 <code>!important</code>，与非级联层内的效果相反。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">1. 非级联层权重比级联层权重高</span><br><span class="line"><span class="comment">/* 灰色 */</span></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: gray;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-tag">dev</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. 级联层内的权重。级联层内无<span class="selector-tag">id</span>，类等权重之分</span><br><span class="line"><span class="comment">/*红色， 若改外@layer R, B 则是蓝色*/</span></span><br><span class="line"><span class="keyword">@layer</span> B, R;</span><br><span class="line"><span class="keyword">@layer</span> R &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-class">.test</span><span class="selector-id">#test</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">3. 层级嵌套时，二级层级外的属性属于一级内的非级联层，权重高于二级层级；</span><br><span class="line"><span class="comment">/*黑色， 若改外@layer B.B1, R 则是红色，因为R的层级优先于B的层级*/</span></span><br><span class="line"><span class="keyword">@layer</span> R, B.B1; </span><br><span class="line"><span class="keyword">@layer</span> R &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: black;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">@layer</span> B1 &#123;</span><br><span class="line">    <span class="selector-tag">div</span> &#123;</span><br><span class="line">      <span class="attribute">background-color</span>: blue;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">5. 级联层内的 `!<span class="selector-tag">important</span>`，与非级联层内的效果相反。</span><br><span class="line"> <span class="comment">/*蓝色， 若改外@layer R, B 则是红色*/</span></span><br><span class="line"><span class="keyword">@layer</span> B, R;</span><br><span class="line"><span class="keyword">@layer</span> R &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@layer</span> B &#123;</span><br><span class="line">  <span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p>若项目中引入外部的样式，可以用级联层包裹，方便项目内的样式覆盖。</p>
+<p>但是兼容性要考虑一下，根据项目实际需求使用。</p>
+<p><img src="../../image/layer/caniuse.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/bezier/" rel="next" title="贝塞尔曲线及其应用">
+                <i class="fa fa-chevron-left"></i> 贝塞尔曲线及其应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/0.1_add_0.2/" rel="prev" title="0.1 + 0.2 != 0.3">
+                0.1 + 0.2 != 0.3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">祝传磊</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-写在前面"><span class="nav-number">1.</span> <span class="nav-text">1. 写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-级联层"><span class="nav-number">2.</span> <span class="nav-text">2. 级联层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-语法"><span class="nav-number">3.</span> <span class="nav-text">3. 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-案例解释"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 案例解释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-声明后即给出代码块"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 声明后即给出代码块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-多个层级块同时被声明"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 多个层级块同时被声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-外联样式也可以被声明"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.1.3 外联样式也可以被声明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-其他情况"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 其他情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-总结"><span class="nav-number">3.3.</span> <span class="nav-text">4. 总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">祝传磊</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+</body>
+</html>
